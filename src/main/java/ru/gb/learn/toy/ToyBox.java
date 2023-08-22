@@ -4,4 +4,6 @@ public interface ToyBox {
     void put(Toy toy);
 
     Toy get();
+
+    boolean isReady();
 }
