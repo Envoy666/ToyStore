@@ -2,15 +2,15 @@ package ru.gb.learn.toy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @ToString
 public class Toy {
-    final int id;
-    final String name;
-    @Setter
-    float weight;
+    private int id;
+    private String name;
+    private float weight;
 }

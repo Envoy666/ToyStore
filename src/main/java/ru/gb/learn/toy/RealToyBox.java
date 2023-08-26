@@ -9,8 +9,15 @@ public class RealToyBox implements ToyBox {
     private final Random random = new Random();
     private final List<Toy> toyList = new ArrayList<>();
 
+/*
     public void put(Toy toy) {
         toyList.add(toy);
+    }
+*/
+
+    @Override
+    public void putAll(List<Toy> toyList) {
+        this.toyList.addAll(toyList);
     }
 
     @Override
