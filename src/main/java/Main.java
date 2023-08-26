@@ -5,7 +5,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        DataProvider provider = new ToyListGenerator();
+        DataProvider provider = new ToyListReader();
 
         List<Toy> toyList = provider.getToyList();
 
