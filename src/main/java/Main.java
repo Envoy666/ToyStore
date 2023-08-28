@@ -1,11 +1,17 @@
-import ru.gb.learn.toy.*;
+import ru.gb.learn.provider.DataProvider;
+import ru.gb.learn.provider.DataProviderFrame;
+import ru.gb.learn.toy.RealToyBox;
+import ru.gb.learn.toy.Toy;
+import ru.gb.learn.toy.ToyBox;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
-        DataProvider provider = new ToyListReader();
+        Scanner scanner = new Scanner(System.in);
+        DataProvider provider = new DataProviderFrame(scanner).getProvider();
 
         List<Toy> toyList = provider.getToyList();
 
