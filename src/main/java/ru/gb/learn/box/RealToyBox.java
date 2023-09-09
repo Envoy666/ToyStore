@@ -1,4 +1,6 @@
-package ru.gb.learn.toy;
+package ru.gb.learn.box;
+
+import ru.gb.learn.toy.Toy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +11,10 @@ public class RealToyBox implements ToyBox {
     private final Random random = new Random();
     private final List<Toy> toyList = new ArrayList<>();
 
-/*
+    @Override
     public void put(Toy toy) {
         toyList.add(toy);
     }
-*/
 
     @Override
     public void putAll(List<Toy> toyList) {
