@@ -2,31 +2,39 @@ package ru.gb.learn.box;
 
 import ru.gb.learn.toy.Toy;
 
-import java.util.*;
+import java.util.Map;
 
+/**
+ * The implementation of {@link ToyBox}.
+ * <p>
+ * Limited amount of each toy type. Probabilities depends on toy weights.
+ */
+public class DrawToyBox extends LootToyBox {
 
-public class DrawToyBox implements ToyBox {
-    private final Random random = new Random();
-
-    private final TreeMap<Float, Toy> toyMap = new TreeMap<>();
-    private float totalWeight = 0;
-
-    @Override
-    public void putAll(List<Toy> toyList) {
-        for (Toy toy : toyList) put(toy);
-    }
-
+    /**
+     * @param newToy toy
+     * @apiNote <ul>
+     * <li>appends specified toy, if ToyBox doesn't contain it</li>
+     * <li>recalculates probabilities of toys depends on the specified toy,
+     * if ToyBox contains specified toy and toy weight and amount doesn't equal 0</li>
+     * <li>removes specified toy and recalculates probabilities of elements depends on it,
+     * if ToyBox contains specified toy and toy weight or amount equals 0</li>
+     * <li>the collection of ToyBox won't change, if ToyBox contains specified toy and
+     * it current weight equals specified one (just updates amount)</li>
+     * </ul>
+     */
     @Override
     public void put(Toy newToy) {
         for (Map.Entry<Float, Toy> entry : toyMap.entrySet()) {
             Toy oldToy = entry.getValue();
             if (oldToy.getName().equals(newToy.getName())) {
                 oldToy.setAmount(newToy.getAmount());
-                if (oldToy.getWeight() == newToy.getWeight()) return;
+                if (oldToy.getWeight() == newToy.getWeight() && newToy.getAmount() != 0) return;
                 float delta = newToy.getWeight() - oldToy.getWeight();
-                Map<Float, Toy> subTreeMap = toyMap.tailMap(entry.getKey());
+                boolean remove = newToy.getWeight() == 0 || newToy.getAmount() == 0;
+                Map<Float, Toy> subTreeMap = toyMap.tailMap(entry.getKey(), !remove);
+                if (remove) toyMap.remove(entry.getKey());
                 reconnect(subTreeMap, delta);
-                totalWeight += delta;
                 return;
             }
         }
@@ -34,6 +42,12 @@ public class DrawToyBox implements ToyBox {
         totalWeight += newToy.getWeight();
     }
 
+    /**
+     * @return a toy from ToyBox, or null if ToyBox is empty
+     * @apiNote if ToyBox is not empty, returns random toy based on toys probabilities, or returns null.
+     * <p>
+     * reduces toy amount. if toy amount equals 0, removes toy from ToyBox
+     */
     @Override
     public Toy get() {
         Map.Entry<Float, Toy> entry = toyMap.floorEntry(random.nextFloat(totalWeight));
@@ -46,23 +60,5 @@ public class DrawToyBox implements ToyBox {
             reconnect(subTreeMap, delta);
         }
         return toy;
-    }
-
-    private void reconnect(Map<Float, Toy> subTreeMap, float delta) {
-        // avoid java.util.ConcurrentModificationException
-        Iterator<Map.Entry<Float, Toy>> iterator = subTreeMap.entrySet().iterator();
-        List<Map.Entry<Float, Toy>> reconnectList = new ArrayList<>(subTreeMap.size());
-        while (iterator.hasNext()) {
-            reconnectList.add(iterator.next());
-            iterator.remove();
-        }
-        for (Map.Entry<Float, Toy> rEntry : reconnectList) {
-            toyMap.put(rEntry.getKey() + delta, rEntry.getValue());
-        }
-    }
-
-    @Override
-    public boolean isReady() {
-        return !toyMap.isEmpty();
     }
 }

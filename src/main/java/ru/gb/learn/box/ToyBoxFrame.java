@@ -11,10 +11,9 @@ public class ToyBoxFrame {
     public ToyBox getToyBox() {
         System.out.println("""
                 Select toy box type:
-                1. Real box (toys quantity and probabilities depends on what toys in what quantity are added)
-                2. Loot box (unlimited quantity of each toy type. probabilities depends on weights)
-                3. Draw box (limited quantity of each toy type. probabilities depends on weights)
-                """);
+                1. Real box (toys amount and probabilities depends on what toys in what amount are added)
+                2. Loot box (unlimited amount of each toy type. probabilities depends on weights)
+                3. Draw box (limited amount of each toy type. probabilities depends on weights)""");
         int option;
         while (true) {
             try {

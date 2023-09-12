@@ -18,5 +18,6 @@ public class Main {
         while (toyBox.isReady()) {
             System.out.println("toyBox.get() = " + toyBox.get());
         }
+        scanner.close();
     }
 }
