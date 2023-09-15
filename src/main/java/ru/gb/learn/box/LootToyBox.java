@@ -99,6 +99,12 @@ public class LootToyBox implements ToyBox {
         return !toyMap.isEmpty();
     }
 
+    /**
+     * record intended for temporal data storage in case of entry reconnection
+     *
+     * @param key   key associated with the toy
+     * @param value toy
+     */
     private record Entry(float key, Toy value) {
     }
 }

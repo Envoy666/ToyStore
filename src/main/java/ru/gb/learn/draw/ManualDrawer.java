@@ -17,8 +17,8 @@ public class ManualDrawer implements Drawer {
     private Scanner scanner;
 
     /**
-     * @apiNote draws toys while ToyBox isn't empty or user won't enter "exit"
      * @param toyBox a ToyBox to be drawn
+     * @apiNote draws toys while ToyBox isn't empty or user won't enter "exit"
      */
     @Override
     public void draw(ToyBox toyBox) {

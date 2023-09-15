@@ -4,10 +4,17 @@ import lombok.AllArgsConstructor;
 
 import java.util.Scanner;
 
+/**
+ * Provides a user with DataProvider selection
+ */
 @AllArgsConstructor
 public class DataProviderFrame {
     private Scanner scanner;
 
+    /**
+     * @return DataProvider of selected type
+     * @apiNote creates the DataProvider selected by the user
+     */
     public DataProvider getProvider() {
         System.out.println("""
                 Select toy data provider:

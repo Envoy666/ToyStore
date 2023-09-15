@@ -8,8 +8,8 @@ import ru.gb.learn.box.ToyBox;
 public interface Drawer {
 
     /**
-     * @apiNote draws toys from a ToyBox
      * @param toyBox a ToyBox to be drawn
+     * @apiNote draws toys from a ToyBox
      */
     void draw(ToyBox toyBox);
 }

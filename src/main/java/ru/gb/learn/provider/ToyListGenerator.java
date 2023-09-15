@@ -6,11 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * The implementation of {@link DataProvider}.
+ * <p>
+ * Generates data of toys
+ */
 public class ToyListGenerator implements DataProvider {
+
+    /**
+     * @return list of toys
+     * @apiNote returns list of toys created with using generated data
+     */
     @Override
     public List<Toy> getToyList() {
-        // в теории, генерация значений кейса, веса и количества влияют друг на друга,
-        // но в данном конкретном случае не вижу смысла создавать отдельный экземпляр под каждую задачу
         Random random = new Random();
         String[] names = {"Teddy Bear", "Robot", "Barbie", "Jet", "Constructor", "Soccer ball"};
         int capacity = 10;

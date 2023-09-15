@@ -10,6 +10,11 @@ import java.util.regex.Pattern;
 
 import static java.util.regex.Pattern.compile;
 
+/**
+ * The implementation of {@link DataProvider}.
+ * <p>
+ * Requests data of toys from a user
+ */
 @AllArgsConstructor
 public class ToyListCreator implements DataProvider {
     private static final Pattern namePattern = compile("\\w+");
@@ -17,6 +22,12 @@ public class ToyListCreator implements DataProvider {
     private static final Pattern amountPattern = compile("^\\d+$");
     private Scanner scanner;
 
+    /**
+     * @param paramName name of requested parameter
+     * @param pattern   pattern to match user input
+     * @return user input
+     * @apiNote requests data from user, matches it against specified pattern and returns input as String
+     */
     private String input(String paramName, Pattern pattern) {
         System.out.println("Input toy " + paramName);
         while (true) {
@@ -30,6 +41,10 @@ public class ToyListCreator implements DataProvider {
         }
     }
 
+    /**
+     * @return list of toys
+     * @apiNote returns list of toys created with using data entered by user
+     */
     @Override
     public List<Toy> getToyList() {
         List<Toy> toyList = new ArrayList<>();

@@ -18,17 +18,17 @@ public class TestDrawer implements Drawer {
     private Scanner scanner;
 
     /**
-     * @apiNote draws toys while ToyBox isn't empty or test won't be done
      * @param toyBox a ToyBox to be drawn
+     * @apiNote draws toys while ToyBox isn't empty or test won't be done
      */
     @Override
     public void draw(ToyBox toyBox) {
         int count = getCount();
-        while (toyBox.isReady()){
+        while (toyBox.isReady()) {
             Toy toy = toyBox.get();
             System.out.println("toy = " + toy);
             count--;
-            if (count == 0){
+            if (count == 0) {
                 System.out.println("Test is done");
                 return;
             }
@@ -37,8 +37,8 @@ public class TestDrawer implements Drawer {
     }
 
     /**
-     * @apiNote requests the count of iterations of the test from a user
      * @return iterations count
+     * @apiNote requests the count of iterations of the test from a user
      */
     private int getCount() {
         int count;
@@ -50,7 +50,7 @@ public class TestDrawer implements Drawer {
                 System.out.println("Incorrect input format. Try again");
                 continue;
             }
-            if (count < 1){
+            if (count < 1) {
                 System.out.println("Incorrect value. Try again");
                 continue;
             }

@@ -11,6 +11,10 @@ import java.util.List;
 
 public class FileWriter {
 
+    /**
+     * @param fileName the name of file to be written
+     * @apiNote writes the list of toys to json file
+     */
     public static void write(String fileName, List<Toy> toyList) {
         try {
             DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter("    ", DefaultIndenter.SYS_LF);

@@ -4,6 +4,9 @@ import ru.gb.learn.toy.Toy;
 
 import java.util.List;
 
+/**
+ * Toys collection. Provides methods to put and get toys.
+ */
 public interface ToyBox {
 
     /**

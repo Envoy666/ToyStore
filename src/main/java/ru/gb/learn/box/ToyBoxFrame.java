@@ -4,10 +4,17 @@ import lombok.AllArgsConstructor;
 
 import java.util.Scanner;
 
+/**
+ * Provides a user with ToyBox selection
+ */
 @AllArgsConstructor
 public class ToyBoxFrame {
     private Scanner scanner;
 
+    /**
+     * @return ToyBox of selected type
+     * @apiNote creates the ToyBox selected by the user
+     */
     public ToyBox getToyBox() {
         System.out.println("""
                 Select toy box type:

@@ -4,11 +4,18 @@ import lombok.AllArgsConstructor;
 
 import java.util.Scanner;
 
+/**
+ * Provides a user with Drawer selection
+ */
 @AllArgsConstructor
 public class DrawerFrame {
 
     private Scanner scanner;
 
+    /**
+     * @return Drawer of selected type
+     * @apiNote creates the Drawer selected by the user
+     */
     public Drawer getDrawer() {
         System.out.println("""
                 Select draw type:
