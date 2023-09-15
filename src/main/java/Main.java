@@ -1,5 +1,7 @@
 import ru.gb.learn.box.ToyBox;
 import ru.gb.learn.box.ToyBoxFrame;
+import ru.gb.learn.draw.Drawer;
+import ru.gb.learn.draw.DrawerFrame;
 import ru.gb.learn.provider.DataProvider;
 import ru.gb.learn.provider.DataProviderFrame;
 import ru.gb.learn.toy.Toy;
@@ -13,11 +15,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         DataProvider provider = new DataProviderFrame(scanner).getProvider();
         ToyBox toyBox = new ToyBoxFrame(scanner).getToyBox();
+        Drawer drawer = new DrawerFrame(scanner).getDrawer();
         List<Toy> toyList = provider.getToyList();
         toyBox.putAll(toyList);
-        while (toyBox.isReady()) {
-            System.out.println("toyBox.get() = " + toyBox.get());
-        }
+        drawer.draw(toyBox);
         scanner.close();
     }
 }

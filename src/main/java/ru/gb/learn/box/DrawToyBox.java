@@ -50,6 +50,7 @@ public class DrawToyBox extends LootToyBox {
      */
     @Override
     public Toy get() {
+        if (toyMap.isEmpty()) return null;
         Map.Entry<Float, Toy> entry = toyMap.floorEntry(random.nextFloat(totalWeight));
         Toy toy = entry.getValue();
         toy.setAmount(toy.getAmount() - 1);
