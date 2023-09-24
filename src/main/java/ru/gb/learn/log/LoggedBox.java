@@ -6,6 +6,9 @@ import ru.gb.learn.toy.Toy;
 
 import java.util.List;
 
+/**
+ * Wrapper for ToyBox which shall be logged
+ */
 @AllArgsConstructor
 public abstract class LoggedBox implements ToyBox {
 
@@ -31,5 +34,9 @@ public abstract class LoggedBox implements ToyBox {
         return host.isReady();
     }
 
+    /**
+     * @apiNote returns string representation of log
+     * @return log as String
+     */
     public abstract String getLog();
 }

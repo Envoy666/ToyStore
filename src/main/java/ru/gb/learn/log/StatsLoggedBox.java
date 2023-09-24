@@ -7,6 +7,9 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The implementation of {@link LoggedBox} which logs statistic of calls of method {@link #get()}
+ */
 public class StatsLoggedBox extends LoggedBox {
 
     private final HashMap<String, Integer> stats = new HashMap<>();

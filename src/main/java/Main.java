@@ -2,12 +2,15 @@ import ru.gb.learn.box.ToyBox;
 import ru.gb.learn.box.ToyBoxFrame;
 import ru.gb.learn.draw.Drawer;
 import ru.gb.learn.draw.DrawerFrame;
+import ru.gb.learn.file.LogWriter;
 import ru.gb.learn.log.LoggedBox;
 import ru.gb.learn.log.LoggedBoxFrame;
 import ru.gb.learn.provider.DataProvider;
 import ru.gb.learn.provider.DataProviderFrame;
 import ru.gb.learn.toy.Toy;
 
+import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,9 +27,11 @@ public class Main {
         toyBox.putAll(toyList);
         drawer.draw(toyBox);
         if (loggedBox != null) {
-            // todo: write log to file
-            String log = loggedBox.getLog();
-            System.out.println("log = " + log);
+            try {
+                LogWriter.write("log.txt", loggedBox.getLog());
+            } catch (IOException | InvalidPathException e) {
+                System.out.println(e.getMessage());
+            }
         }
         scanner.close();
     }

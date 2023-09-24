@@ -6,6 +6,9 @@ import ru.gb.learn.toy.Toy;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The implementation of {@link LoggedBox} which logs all calls of ToyBox methods
+ */
 public class FullLoggedBox extends LoggedBox {
 
     private final List<String> log = new ArrayList<>();

@@ -5,10 +5,18 @@ import ru.gb.learn.box.ToyBox;
 
 import java.util.Scanner;
 
+/**
+ * Provides a user with LoggedBox selection
+ */
 @AllArgsConstructor
 public class LoggedBoxFrame {
     private Scanner scanner;
 
+    /**
+     * @param host ToyBox which shall be logged
+     * @return LoggedBox of selected type or null if option "Disable log" is selected
+     * @apiNote wraps specified ToyBox with LoggedBox of selected type
+     */
     public LoggedBox selectLog(ToyBox host) {
         System.out.println("""
                 Select log option:
