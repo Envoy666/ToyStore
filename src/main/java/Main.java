@@ -2,6 +2,8 @@ import ru.gb.learn.box.ToyBox;
 import ru.gb.learn.box.ToyBoxFrame;
 import ru.gb.learn.draw.Drawer;
 import ru.gb.learn.draw.DrawerFrame;
+import ru.gb.learn.log.LoggedBox;
+import ru.gb.learn.log.LoggedBoxFrame;
 import ru.gb.learn.provider.DataProvider;
 import ru.gb.learn.provider.DataProviderFrame;
 import ru.gb.learn.toy.Toy;
@@ -16,9 +18,16 @@ public class Main {
         DataProvider provider = new DataProviderFrame(scanner).getProvider();
         ToyBox toyBox = new ToyBoxFrame(scanner).getToyBox();
         Drawer drawer = new DrawerFrame(scanner).getDrawer();
+        LoggedBox loggedBox = new LoggedBoxFrame(scanner).selectLog(toyBox);
+        if (loggedBox != null) toyBox = loggedBox;
         List<Toy> toyList = provider.getToyList();
         toyBox.putAll(toyList);
         drawer.draw(toyBox);
+        if (loggedBox != null) {
+            // todo: write log to file
+            String log = loggedBox.getLog();
+            System.out.println("log = " + log);
+        }
         scanner.close();
     }
 }

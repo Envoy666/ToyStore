@@ -24,7 +24,9 @@ public class ToyListGenerator implements DataProvider {
         int capacity = 10;
         List<Toy> toyList = new ArrayList<>(capacity);
         for (int i = 0; i < capacity; i++)
-            toyList.add(new Toy(names[random.nextInt()], random.nextFloat(), random.nextInt(11)));
+            toyList.add(new Toy(names[random.nextInt(names.length)],
+                    random.nextFloat(),
+                    random.nextInt(11)));
         return toyList;
     }
 }

@@ -14,9 +14,9 @@ public class DrawToyBox extends LootToyBox {
     /**
      * @param newToy toy
      * @apiNote <ul>
-     * <li>appends specified toy, if ToyBox doesn't contain it</li>
+     * <li>appends specified toy, if ToyBox doesn't contain it and toy weight and amount don't equal 0</li>
      * <li>recalculates probabilities of toys depends on the specified toy,
-     * if ToyBox contains specified toy and toy weight and amount doesn't equal 0</li>
+     * if ToyBox contains specified toy and toy weight and amount don't equal 0</li>
      * <li>removes specified toy and recalculates probabilities of elements depends on it,
      * if ToyBox contains specified toy and toy weight or amount equals 0</li>
      * <li>the collection of ToyBox won't change, if ToyBox contains specified toy and
@@ -30,16 +30,23 @@ public class DrawToyBox extends LootToyBox {
             if (oldToy.getName().equals(newToy.getName())) {
                 oldToy.setAmount(newToy.getAmount());
                 if (oldToy.getWeight() == newToy.getWeight() && newToy.getAmount() != 0) return;
-                float delta = newToy.getWeight() - oldToy.getWeight();
-                boolean remove = newToy.getWeight() == 0 || newToy.getAmount() == 0;
-                Map<Float, Toy> subTreeMap = toyMap.tailMap(entry.getKey(), !remove);
-                if (remove) toyMap.remove(entry.getKey());
+                Map<Float, Toy> subTreeMap = toyMap.tailMap(entry.getKey(), false);
+                float delta;
+                if (newToy.getWeight() == 0 || newToy.getAmount() == 0) {
+                    toyMap.remove(entry.getKey());
+                    delta = -oldToy.getWeight();
+                } else {
+                    toyMap.replace(entry.getKey(), newToy);
+                    delta = newToy.getWeight() - oldToy.getWeight();
+                }
                 reconnect(subTreeMap, delta);
                 return;
             }
         }
-        toyMap.put(totalWeight, newToy);
-        totalWeight += newToy.getWeight();
+        if (newToy.getWeight() != 0 && newToy.getAmount() != 0) {
+            toyMap.put(totalWeight, newToy);
+            totalWeight += newToy.getWeight();
+        }
     }
 
     /**
@@ -51,7 +58,8 @@ public class DrawToyBox extends LootToyBox {
     @Override
     public Toy get() {
         if (toyMap.isEmpty()) return null;
-        Map.Entry<Float, Toy> entry = toyMap.floorEntry(random.nextFloat(totalWeight));
+        float key1 = random.nextFloat(totalWeight);
+        Map.Entry<Float, Toy> entry = toyMap.floorEntry(key1);
         Toy toy = entry.getValue();
         toy.setAmount(toy.getAmount() - 1);
         if (toy.getAmount() == 0) {

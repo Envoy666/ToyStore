@@ -32,7 +32,7 @@ public class LootToyBox implements ToyBox {
     /**
      * @param newToy toy
      * @apiNote <ul>
-     * <li>appends specified toy, if ToyBox doesn't contain it</li>
+     * <li>appends specified toy, if ToyBox doesn't contain it and toy weight doesn't equal 0</li>
      * <li>recalculates probabilities of toys depends on the specified toy,
      * if ToyBox contains specified toy and toy weight doesn't equal 0</li>
      * <li>removes specified toy and recalculates probabilities of elements depends on it,
@@ -47,16 +47,17 @@ public class LootToyBox implements ToyBox {
             Toy oldToy = entry.getValue();
             if (oldToy.getName().equals(newToy.getName())) {
                 if (oldToy.getWeight() == newToy.getWeight()) return;
-                float delta = newToy.getWeight() - oldToy.getWeight();
-                boolean remove = newToy.getWeight() == 0;
-                Map<Float, Toy> subTreeMap = toyMap.tailMap(entry.getKey(), !remove);
-                if (remove) toyMap.remove(entry.getKey());
-                reconnect(subTreeMap, delta);
+                Map<Float, Toy> subTreeMap = toyMap.tailMap(entry.getKey(), false);
+                if (newToy.getWeight() == 0) toyMap.remove(entry.getKey());
+                else toyMap.replace(entry.getKey(), newToy);
+                reconnect(subTreeMap, newToy.getWeight() - oldToy.getWeight());
                 return;
             }
         }
-        toyMap.put(totalWeight, newToy);
-        totalWeight += newToy.getWeight();
+        if (newToy.getWeight() != 0) {
+            toyMap.put(totalWeight, newToy);
+            totalWeight += newToy.getWeight();
+        }
     }
 
     /**
@@ -66,19 +67,18 @@ public class LootToyBox implements ToyBox {
      * the toy specified in {@link #put(Toy)}
      */
     protected void reconnect(Map<Float, Toy> subTreeMap, float delta) {
-        if (!subTreeMap.isEmpty()) {
-            List<Entry> reconnectList = new ArrayList<>(subTreeMap.size());
-            Iterator<Map.Entry<Float, Toy>> iterator = subTreeMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<Float, Toy> entry = iterator.next();
-                reconnectList.add(new Entry(entry.getKey() + delta, entry.getValue()));
-                iterator.remove();
-            }
-            for (Entry entry : reconnectList) {
-                toyMap.put(entry.key, entry.value);
-            }
-        }
         totalWeight += delta;
+        if (subTreeMap.isEmpty()) return;
+        List<Entry> reconnectList = new ArrayList<>(subTreeMap.size());
+        Iterator<Map.Entry<Float, Toy>> iterator = subTreeMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<Float, Toy> entry = iterator.next();
+            reconnectList.add(new Entry(entry.getKey() + delta, entry.getValue()));
+            iterator.remove();
+        }
+        for (Entry entry : reconnectList) {
+            toyMap.put(entry.key, entry.value);
+        }
     }
 
     /**
